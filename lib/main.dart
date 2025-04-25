@@ -17,7 +17,7 @@ Future<void> main() async {
       supportedLocales: [Locale('en'), Locale('tr')],
       path: "assets/lang",
       fallbackLocale: Locale('en'),
-      child: AdminApp(initalPage: "/login-view"),
+      child: AdminApp(initalPage: "/main-view"),
     ),
   );
 }
