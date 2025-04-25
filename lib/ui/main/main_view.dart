@@ -12,39 +12,33 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => MainViewModel(),
-      builder:
-          (context, viewModel, child) => LayoutBuilder(
-            builder: (context, constraints) {
-              final bool isDesktop = constraints.maxWidth >= 800;
+      builder: (context, viewModel, child) => LayoutBuilder(
+        builder: (context, constraints) {
+          final bool isDesktop = constraints.maxWidth >= 800;
 
-              return Scaffold(
-                appBar:
-                    isDesktop
-                        ? null
-                        : AppBar(
-                          title: const Text('Admin Panel'),
-                          elevation: 0,
-                        ),
-                drawer:
-                    isDesktop
-                        ? null
-                        : _buildDrawer(context, viewModel, isDesktop),
-                body: Row(
-                  children: [
-                    if (isDesktop) _buildDrawer(context, viewModel, isDesktop),
-                    Expanded(
-                      child:
-                          viewModel.isLoading
-                              ? const Center(child: CircularProgressIndicator())
-                              : getViewForIndex(viewModel.currentTabIndex),
-                    ),
-                  ],
+          return Scaffold(
+            appBar: isDesktop
+                ? null
+                : AppBar(
+                    title: const Text('Admin Panel'),
+                    elevation: 0,
+                  ),
+            drawer: isDesktop ? null : _buildDrawer(context, viewModel, isDesktop),
+            body: Row(
+              children: [
+                if (isDesktop) _buildDrawer(context, viewModel, isDesktop),
+                Expanded(
+                  child: viewModel.isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : getViewForIndex(viewModel.currentTabIndex),
                 ),
-                bottomNavigationBar:
-                    !isDesktop ? _buildBottomNavigationBar(viewModel) : null,
-              );
-            },
-          ),
+              ],
+            ),
+            bottomNavigationBar:
+                !isDesktop ? _buildBottomNavigationBar(viewModel) : null,
+          );
+        },
+      ),
     );
   }
 
@@ -58,193 +52,122 @@ class MainView extends StatelessWidget {
       child: Drawer(
         elevation: isDesktop ? 0 : 16,
         backgroundColor: Colors.white,
-        child: ListView(
-          padding: EdgeInsets.zero,
+        child: Column(
           children: [
-            SizedBox(height: 35.h),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Row(
+            _buildDrawerHeader(),
+            Expanded(
+              child: _buildDrawerItems(context, viewModel, isDesktop),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDrawerHeader() {
+    return Column(
+      children: [
+        SizedBox(height: 35.h),
+        Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 24,
+                backgroundColor: Colors.grey[100],
+                backgroundImage: const NetworkImage(
+                  'https://avatar.iran.liara.run/public/boy',
+                ),
+              ),
+              const SizedBox(width: 12),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    radius: 24,
-                    backgroundColor: Colors.grey[100],
-                    backgroundImage: const NetworkImage(
-                      'https://avatar.iran.liara.run/public/boy',
+                  Text(
+                    'John Doe',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'John Doe',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        'Admin',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF8E8E93),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    'Admin',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF8E8E93),
+                    ),
                   ),
                 ],
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              child: Text(
-                'MENU',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF8E8E93),
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDrawerItems(
+    BuildContext context,
+    MainViewModel viewModel,
+    bool isDesktop,
+  ) {
+    return ListView.builder(
+      padding: EdgeInsets.zero,
+      itemCount: viewModel.drawerItems.length + 2, // +2 for section headers
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return _buildSectionHeader('MENU');
+        } else if (index == 3) {
+          return _buildSectionHeader('ELEMENTS');
+        }
+
+        final itemIndex = index > 3 ? index - 4 : index - 1;
+        final item = viewModel.drawerItems[itemIndex];
+        final bool isOpen = viewModel.isDrawerItemOpen(item.index);
+
+        return Column(
+          children: [
             createDrawerItem(
-              const DrawerItem(
-                title: 'Dashboard',
-                icon: Icons.dashboard_outlined,
-                index: 0,
-              ),
+              item,
               viewModel.currentTabIndex,
               (index) {
-                viewModel.setTabIndex(index);
-                if (!isDesktop) Navigator.pop(context);
+                if (item.hasSubItems) {
+                  viewModel.toggleDrawerItem(item.index);
+                } else {
+                  viewModel.setTabIndex(index);
+                  if (!isDesktop) Navigator.pop(context);
+                }
               },
+              isExpanded: isOpen,
             ),
-            createDrawerItem(
-              const DrawerItem(
-                title: 'Starter Pages',
-                icon: Icons.article_outlined,
-                index: 1,
-              ),
-              viewModel.currentTabIndex,
-              (index) {
-                viewModel.setTabIndex(index);
-                if (!isDesktop) Navigator.pop(context);
-              },
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              child: Text(
-                'ELEMENTS',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF8E8E93),
-                  letterSpacing: 1.2,
-                ),
-              ),
-            ),
-            createDrawerItem(
-              const DrawerItem(
-                title: 'Components',
-                icon: Icons.widgets_outlined,
-                index: 2,
-                hasSubItems: true,
-              ),
-              viewModel.currentTabIndex,
-              (index) {
-                viewModel.setTabIndex(index);
-                if (!isDesktop) Navigator.pop(context);
-              },
-            ),
-            createDrawerItem(
-              const DrawerItem(
-                title: 'Forms',
-                icon: Icons.edit_note_outlined,
-                index: 3,
-                hasSubItems: true,
-              ),
-              viewModel.currentTabIndex,
-              (index) {
-                viewModel.setTabIndex(index);
-                if (!isDesktop) Navigator.pop(context);
-              },
-            ),
-            createDrawerItem(
-              const DrawerItem(
-                title: 'Maps',
-                icon: Icons.map_outlined,
-                index: 4,
-              ),
-              viewModel.currentTabIndex,
-              (index) {
-                viewModel.setTabIndex(index);
-                if (!isDesktop) Navigator.pop(context);
-              },
-            ),
-            createDrawerItem(
-              const DrawerItem(
-                title: 'Tables',
-                icon: Icons.table_chart_outlined,
-                index: 5,
-              ),
-              viewModel.currentTabIndex,
-              (index) {
-                viewModel.setTabIndex(index);
-                if (!isDesktop) Navigator.pop(context);
-              },
-            ),
-            createDrawerItem(
-              const DrawerItem(
-                title: 'Chart',
-                icon: Icons.pie_chart_outline,
-                index: 6,
-              ),
-              viewModel.currentTabIndex,
-              (index) {
-                viewModel.setTabIndex(index);
-                if (!isDesktop) Navigator.pop(context);
-              },
-            ),
-            createDrawerItem(
-              const DrawerItem(
-                title: 'Icons',
-                icon: Icons.emoji_objects_outlined,
-                index: 7,
-              ),
-              viewModel.currentTabIndex,
-              (index) {
-                viewModel.setTabIndex(index);
-                if (!isDesktop) Navigator.pop(context);
-              },
-            ),
-            createDrawerItem(
-              const DrawerItem(
-                title: 'Level',
-                icon: Icons.layers_outlined,
-                index: 8,
-                hasSubItems: true,
-              ),
-              viewModel.currentTabIndex,
-              (index) {
-                viewModel.setTabIndex(index);
-                if (!isDesktop) Navigator.pop(context);
-              },
-            ),
-            createDrawerItem(
-              const DrawerItem(
-                title: 'Badge Items',
-                icon: Icons.verified_outlined,
-                index: 9,
-                isHot: true,
-              ),
-              viewModel.currentTabIndex,
-              (index) {
-                viewModel.setTabIndex(index);
-                if (!isDesktop) Navigator.pop(context);
-              },
-            ),
+            if (item.hasSubItems && item.subItems != null && isOpen)
+              ...item.subItems!.map((subItem) => Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: createDrawerItem(
+                      subItem,
+                      viewModel.currentTabIndex,
+                      (index) {
+                        viewModel.setTabIndex(index);
+                        if (!isDesktop) Navigator.pop(context);
+                      },
+                    ),
+                  )),
           ],
+        );
+      },
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: Color(0xFF8E8E93),
+          letterSpacing: 1.2,
         ),
       ),
     );

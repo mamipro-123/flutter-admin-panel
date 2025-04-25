@@ -68,7 +68,7 @@ class TabItemData {
 Widget getViewForIndex(int index) {
   switch (index) {
     case 0:
-      return const NotificationsView();
+      return const HomeView();
     case 1:
       return const SearchView();
     case 2:

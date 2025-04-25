@@ -6,6 +6,7 @@ class DrawerItem {
   final int index;
   final bool hasSubItems;
   final bool isHot;
+  final List<DrawerItem>? subItems;
 
   const DrawerItem({
     required this.title,
@@ -13,14 +14,16 @@ class DrawerItem {
     required this.index,
     this.hasSubItems = false,
     this.isHot = false,
+    this.subItems,
   });
 }
 
 ListTile createDrawerItem(
   DrawerItem item,
   int currentIndex,
-  Function(int) onTap,
-) {
+  Function(int) onTap, {
+  bool isExpanded = false,
+}) {
   final bool isSelected = currentIndex == item.index;
 
   return ListTile(
@@ -43,7 +46,11 @@ ListTile createDrawerItem(
         ),
         if (item.hasSubItems) ...[
           const Spacer(),
-          Icon(Icons.chevron_right, size: 20, color: Colors.grey[400]),
+          Icon(
+            isExpanded ? Icons.expand_less : Icons.chevron_right,
+            size: 20,
+            color: Colors.grey[400],
+          ),
         ],
         if (item.isHot) ...[
           const SizedBox(width: 8),
