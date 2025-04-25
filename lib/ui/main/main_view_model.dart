@@ -28,6 +28,7 @@ class MainViewModel extends BaseViewModel {
   }
 
   final List<DrawerItem> _drawerItems = [
+    // MENU section items
     const DrawerItem(
       title: 'Dashboard',
       icon: Icons.dashboard_outlined,
@@ -38,6 +39,7 @@ class MainViewModel extends BaseViewModel {
       icon: Icons.article_outlined,
       index: 1,
     ),
+    // ELEMENTS section items
     DrawerItem(
       title: 'Components',
       icon: Icons.widgets_outlined,

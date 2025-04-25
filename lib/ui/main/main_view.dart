@@ -111,50 +111,68 @@ class MainView extends StatelessWidget {
     MainViewModel viewModel,
     bool isDesktop,
   ) {
-    return ListView.builder(
+    // MENU items (Dashboard ve Starter Pages)
+    final menuItems = viewModel.drawerItems.take(2).toList();
+    // ELEMENTS items (Components ve sonrası)
+    final elementItems = viewModel.drawerItems.skip(2).toList();
+
+    return ListView(
       padding: EdgeInsets.zero,
-      itemCount: viewModel.drawerItems.length + 2, // +2 for section headers
-      itemBuilder: (context, index) {
-        if (index == 0) {
-          return _buildSectionHeader('MENU');
-        } else if (index == 3) {
-          return _buildSectionHeader('ELEMENTS');
-        }
-
-        final itemIndex = index > 3 ? index - 4 : index - 1;
-        final item = viewModel.drawerItems[itemIndex];
-        final bool isOpen = viewModel.isDrawerItemOpen(item.index);
-
-        return Column(
-          children: [
-            createDrawerItem(
+      children: [
+        _buildSectionHeader('MENU'),
+        ...menuItems.map((item) => _buildDrawerItemWithSubItems(
+              context,
               item,
-              viewModel.currentTabIndex,
-              (index) {
-                if (item.hasSubItems) {
-                  viewModel.toggleDrawerItem(item.index);
-                } else {
-                  viewModel.setTabIndex(index);
-                  if (!isDesktop) Navigator.pop(context);
-                }
-              },
-              isExpanded: isOpen,
-            ),
-            if (item.hasSubItems && item.subItems != null && isOpen)
-              ...item.subItems!.map((subItem) => Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: createDrawerItem(
-                      subItem,
-                      viewModel.currentTabIndex,
-                      (index) {
-                        viewModel.setTabIndex(index);
-                        if (!isDesktop) Navigator.pop(context);
-                      },
-                    ),
-                  )),
-          ],
-        );
-      },
+              viewModel,
+              isDesktop,
+            )),
+        _buildSectionHeader('ELEMENTS'),
+        ...elementItems.map((item) => _buildDrawerItemWithSubItems(
+              context,
+              item,
+              viewModel,
+              isDesktop,
+            )),
+      ],
+    );
+  }
+
+  Widget _buildDrawerItemWithSubItems(
+    BuildContext context,
+    DrawerItem item,
+    MainViewModel viewModel,
+    bool isDesktop,
+  ) {
+    final bool isOpen = viewModel.isDrawerItemOpen(item.index);
+
+    return Column(
+      children: [
+        createDrawerItem(
+          item,
+          viewModel.currentTabIndex,
+          (index) {
+            if (item.hasSubItems) {
+              viewModel.toggleDrawerItem(item.index);
+            } else {
+              viewModel.setTabIndex(index);
+              if (!isDesktop) Navigator.pop(context);
+            }
+          },
+          isExpanded: isOpen,
+        ),
+        if (item.hasSubItems && item.subItems != null && isOpen)
+          ...item.subItems!.map((subItem) => Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: createDrawerItem(
+                  subItem,
+                  viewModel.currentTabIndex,
+                  (index) {
+                    viewModel.setTabIndex(index);
+                    if (!isDesktop) Navigator.pop(context);
+                  },
+                ),
+              )),
+      ],
     );
   }
 
