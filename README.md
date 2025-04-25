@@ -11,15 +11,7 @@ A modern and responsive admin panel built with Flutter, designed to work seamles
 ![Mobile View](assets/readme.md/Mobil.png)
 ![Chrome Mobile View](assets/readme.md/Chrome%20Mobile.png)
 
-## ✨ Features
 
-- 📱 Responsive design that works on both desktop and mobile devices
-- 🌐 Cross-platform compatibility
-- 🔒 Secure authentication system
-- 📊 Dashboard with analytics
-- 📝 User management
-- ⚙️ System settings
-- 🔍 Advanced search functionality
 
 ## 🚀 Getting Started
 
@@ -34,7 +26,7 @@ A modern and responsive admin panel built with Flutter, designed to work seamles
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/admin_panel.git
+git clone https://github.com/mamipro-123/flutter-admin-panel.git
 ```
 
 2. Navigate to project directory
@@ -63,7 +55,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- Your Name - Initial work
+- Muhammed Rıza Kaynak - Initial work
 
 ## 🙏 Acknowledgments
 
