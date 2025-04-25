@@ -11,7 +11,6 @@ class ProfileView extends StatelessWidget {
       viewModelBuilder: () => ProfileViewModel(),
       builder:
           (context, viewModel, child) => Scaffold(
-            appBar: AppBar(title: const Text('Profile')),
             body:
                 viewModel.isLoading
                     ? const Center(child: CircularProgressIndicator())

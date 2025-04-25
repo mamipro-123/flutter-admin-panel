@@ -11,7 +11,6 @@ class NotificationsView extends StatelessWidget {
       viewModelBuilder: () => NotificationsViewModel(),
       builder:
           (context, viewModel, child) => Scaffold(
-            appBar: AppBar(title: const Text('Notifications')),
             body:
                 viewModel.isLoading
                     ? const Center(child: CircularProgressIndicator())

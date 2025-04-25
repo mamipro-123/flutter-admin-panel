@@ -11,7 +11,6 @@ class SearchView extends StatelessWidget {
       viewModelBuilder: () => SearchViewModel(),
       builder:
           (context, viewModel, child) => Scaffold(
-            appBar: AppBar(title: const Text('Search')),
             body:
                 viewModel.isLoading
                     ? const Center(child: CircularProgressIndicator())
