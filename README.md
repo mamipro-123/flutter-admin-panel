@@ -136,7 +136,12 @@ cd admin_panel
 flutter pub get
 ```
 
-4. Run the app
+4. Generate code (for Stacked, Freezed, and other code generation)
+```bash
+dart run build_runner build
+```
+
+5. Run the app
 ```bash
 flutter run
 ```

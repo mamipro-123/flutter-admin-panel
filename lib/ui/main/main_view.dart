@@ -12,33 +12,39 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => MainViewModel(),
-      builder: (context, viewModel, child) => LayoutBuilder(
-        builder: (context, constraints) {
-          final bool isDesktop = constraints.maxWidth >= 800;
+      builder:
+          (context, viewModel, child) => LayoutBuilder(
+            builder: (context, constraints) {
+              final bool isDesktop = constraints.maxWidth >= 800;
 
-          return Scaffold(
-            appBar: isDesktop
-                ? null
-                : AppBar(
-                    title: const Text('Admin Panel'),
-                    elevation: 0,
-                  ),
-            drawer: isDesktop ? null : _buildDrawer(context, viewModel, isDesktop),
-            body: Row(
-              children: [
-                if (isDesktop) _buildDrawer(context, viewModel, isDesktop),
-                Expanded(
-                  child: viewModel.isLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : getViewForIndex(viewModel.currentTabIndex),
+              return Scaffold(
+                appBar:
+                    isDesktop
+                        ? null
+                        : AppBar(
+                          title: const Text('Admin Panel'),
+                          elevation: 0,
+                        ),
+                drawer:
+                    isDesktop
+                        ? null
+                        : _buildDrawer(context, viewModel, isDesktop),
+                body: Row(
+                  children: [
+                    if (isDesktop) _buildDrawer(context, viewModel, isDesktop),
+                    Expanded(
+                      child:
+                          viewModel.isLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : getViewForIndex(viewModel.currentTabIndex),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            bottomNavigationBar:
-                !isDesktop ? _buildBottomNavigationBar(viewModel) : null,
-          );
-        },
-      ),
+                bottomNavigationBar:
+                    !isDesktop ? _buildBottomNavigationBar(viewModel) : null,
+              );
+            },
+          ),
     );
   }
 
@@ -55,9 +61,7 @@ class MainView extends StatelessWidget {
         child: Column(
           children: [
             _buildDrawerHeader(),
-            Expanded(
-              child: _buildDrawerItems(context, viewModel, isDesktop),
-            ),
+            Expanded(child: _buildDrawerItems(context, viewModel, isDesktop)),
           ],
         ),
       ),
@@ -85,17 +89,11 @@ class MainView extends StatelessWidget {
                 children: [
                   Text(
                     'John Doe',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   Text(
                     'Admin',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF8E8E93),
-                    ),
+                    style: TextStyle(fontSize: 14, color: Color(0xFF8E8E93)),
                   ),
                 ],
               ),
@@ -120,19 +118,15 @@ class MainView extends StatelessWidget {
       padding: EdgeInsets.zero,
       children: [
         _buildSectionHeader('MENU'),
-        ...menuItems.map((item) => _buildDrawerItemWithSubItems(
-              context,
-              item,
-              viewModel,
-              isDesktop,
-            )),
+        ...menuItems.map(
+          (item) =>
+              _buildDrawerItemWithSubItems(context, item, viewModel, isDesktop),
+        ),
         _buildSectionHeader('ELEMENTS'),
-        ...elementItems.map((item) => _buildDrawerItemWithSubItems(
-              context,
-              item,
-              viewModel,
-              isDesktop,
-            )),
+        ...elementItems.map(
+          (item) =>
+              _buildDrawerItemWithSubItems(context, item, viewModel, isDesktop),
+        ),
       ],
     );
   }
@@ -147,31 +141,26 @@ class MainView extends StatelessWidget {
 
     return Column(
       children: [
-        createDrawerItem(
-          item,
-          viewModel.currentTabIndex,
-          (index) {
-            if (item.hasSubItems) {
-              viewModel.toggleDrawerItem(item.index);
-            } else {
-              viewModel.setTabIndex(index);
-              if (!isDesktop) Navigator.pop(context);
-            }
-          },
-          isExpanded: isOpen,
-        ),
+        createDrawerItem(item, viewModel.currentTabIndex, (index) {
+          if (item.hasSubItems) {
+            viewModel.toggleDrawerItem(item.index);
+          } else {
+            viewModel.setTabIndex(index);
+            if (!isDesktop) Navigator.pop(context);
+          }
+        }, isExpanded: isOpen),
         if (item.hasSubItems && item.subItems != null && isOpen)
-          ...item.subItems!.map((subItem) => Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: createDrawerItem(
-                  subItem,
-                  viewModel.currentTabIndex,
-                  (index) {
-                    viewModel.setTabIndex(index);
-                    if (!isDesktop) Navigator.pop(context);
-                  },
-                ),
-              )),
+          ...item.subItems!.map(
+            (subItem) => Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: createDrawerItem(subItem, viewModel.currentTabIndex, (
+                index,
+              ) {
+                viewModel.setTabIndex(index);
+                if (!isDesktop) Navigator.pop(context);
+              }),
+            ),
+          ),
       ],
     );
   }

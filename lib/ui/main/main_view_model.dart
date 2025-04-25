@@ -10,13 +10,13 @@ class MainViewModel extends BaseViewModel {
   int get currentTabIndex => _currentTabIndex;
   bool _reverse = false;
   bool get reverse => _reverse;
-  
+
   // Açık olan drawer item'ların index'lerini tutan set
   final Set<int> _openDrawerItems = {};
-  
+
   // Bir drawer item'ın açık olup olmadığını kontrol eden metod
   bool isDrawerItemOpen(int index) => _openDrawerItems.contains(index);
-  
+
   // Drawer item'ı açıp kapatmak için metod
   void toggleDrawerItem(int index) {
     if (_openDrawerItems.contains(index)) {
@@ -51,16 +51,8 @@ class MainViewModel extends BaseViewModel {
           icon: Icons.radio_button_unchecked,
           index: 20,
         ),
-        DrawerItem(
-          title: 'Cards',
-          icon: Icons.credit_card,
-          index: 21,
-        ),
-        DrawerItem(
-          title: 'Dialogs',
-          icon: Icons.message_outlined,
-          index: 22,
-        ),
+        DrawerItem(title: 'Cards', icon: Icons.credit_card, index: 21),
+        DrawerItem(title: 'Dialogs', icon: Icons.message_outlined, index: 22),
         DrawerItem(
           title: 'Progress Bars',
           icon: Icons.pie_chart_outline,
@@ -74,21 +66,13 @@ class MainViewModel extends BaseViewModel {
       index: 3,
       hasSubItems: true,
     ),
-    const DrawerItem(
-      title: 'Maps',
-      icon: Icons.map_outlined,
-      index: 4,
-    ),
+    const DrawerItem(title: 'Maps', icon: Icons.map_outlined, index: 4),
     const DrawerItem(
       title: 'Tables',
       icon: Icons.table_chart_outlined,
       index: 5,
     ),
-    const DrawerItem(
-      title: 'Chart',
-      icon: Icons.pie_chart_outline,
-      index: 6,
-    ),
+    const DrawerItem(title: 'Chart', icon: Icons.pie_chart_outline, index: 6),
     const DrawerItem(
       title: 'Icons',
       icon: Icons.emoji_objects_outlined,
