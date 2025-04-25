@@ -4,14 +4,111 @@ A modern and responsive admin panel built with Flutter, designed to work seamles
 
 ## 📱 Screenshots
 
-### Web Version (Chrome)
-![Chrome Desktop View](assets/readme.md/Chrome%20Wide.png)
+### Web Version (Desktop)
+![Desktop View](assets/readme.md/web/Screenshot%202025-04-25%20at%2022.52.42.png)
+
+### Web Version (Responsive Views)
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+  <img src="assets/readme.md/web/Screenshot%202025-04-25%20at%2022.52.56.png" width="45%" alt="Web View 1">
+  <img src="assets/readme.md/web/Screenshot%202025-04-25%20at%2022.53.06.png" width="45%" alt="Web View 2">
+  <img src="assets/readme.md/web/Screenshot%202025-04-25%20at%2022.53.15.png" width="45%" alt="Web View 3">
+  <img src="assets/readme.md/web/Screenshot%202025-04-25%20at%2022.53.34.png" width="45%" alt="Web View 4">
+</div>
 
 ### Mobile Version
-![Mobile View](assets/readme.md/Mobil.png)
-![Chrome Mobile View](assets/readme.md/Chrome%20Mobile.png)
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+  <img src="assets/readme.md/mobil/Screenshot%202025-04-25%20at%2022.36.24.png" width="45%" alt="Mobile View 1">
+  <img src="assets/readme.md/mobil/Screenshot%202025-04-25%20at%2022.36.35.png" width="45%" alt="Mobile View 2">
+  <img src="assets/readme.md/mobil/Screenshot%202025-04-25%20at%2022.36.47.png" width="45%" alt="Mobile View 3">
+  <img src="assets/readme.md/mobil/Screenshot%202025-04-25%20at%2022.37.28.png" width="45%" alt="Mobile View 4">
+</div>
 
+## 🏗️ Project Architecture
 
+### Directory Structure
+```
+lib/
+├── main.dart                    # Application entry point
+│
+├── app/                         # App-wide configurations and setup
+│   ├── app.dart                 # Main app configuration
+│   ├── app.router.dart          # Route definitions
+│   ├── app_base_view_model.dart # Base view model for all screens
+│   └── admin_app.dart           # Admin app specific configurations
+│
+├── core/                        # Core functionality and utilities
+│   ├── api/                     # API related code
+│   │   └── api.dart             # API client configuration
+│   ├── di/                      # Dependency injection
+│   │   └── get_it.dart          # GetIt service locator setup
+│   ├── error/                   # Error handling
+│   ├── repository/              # Data repositories
+│   ├── models/                  # Data models
+│   ├── helpers/                 # Helper utilities
+│   └── services/                # Core services
+│
+├── common/                      # Shared components
+│   ├── constants/               # App-wide constants
+│   └── helpers/                 # Shared helper functions
+│
+└── ui/                         # UI components and screens
+    ├── home/                   # Home screen
+    │   ├── home_view.dart      # Home screen UI
+    │   └── home_view_model.dart # Home screen logic
+    ├── login/                  # Login screen
+    ├── main/                   # Main screen
+    ├── notifications/          # Notifications screen
+    ├── profile/               # Profile screen
+    ├── search/                # Search screen
+    └── widgets/               # Reusable UI components
+```
+
+### Technology Stack
+
+#### State Management & Architecture
+- **Stacked** (v3.4.3) - MVVM architecture pattern implementation
+- **Stacked Services** - Service locator and dependency injection
+- **Stacked Generator** - Code generation for Stacked architecture
+- **GetIt** - Dependency injection and service locator
+
+#### Network & Data Handling
+- **Dio** (v5.5.0) - HTTP client for API requests
+- **Retrofit** (v4.1.0) - Type-safe HTTP client
+- **JSON Serialization** - For data model serialization
+- **Freezed** - Immutable state management and data classes
+
+#### UI Components & Styling
+- **Material Design** - Base UI framework
+- **Google Fonts** - Typography
+- **Responsive Size Helper Plus** - Responsive UI utilities
+- **Animations** - Flutter animations package
+- **Flutter Slidable** - Swipeable widgets
+- **Smooth Page Indicator** - Page transition indicators
+- **Pie Chart** & **Fl Chart** - Data visualization
+
+#### Localization & Storage
+- **Easy Localization** - Multi-language support
+- **Shared Preferences** - Local data storage
+- **Flutter Secure Storage** - Secure data storage
+
+#### Security
+- **Crypto** - Cryptographic operations
+
+### Key Features
+- Responsive design for both web and mobile
+- MVVM architecture pattern
+- Multi-language support
+- Secure data handling
+- Modern UI components
+- Data visualization capabilities
+- Form validation
+- Local and secure storage
+
+### Development Tools
+- **Build Runner** - Code generation
+- **Flutter Lints** - Code quality and style enforcement
+- **JSON Serializable** - JSON serialization code generation
+- **Retrofit Generator** - API client code generation
 
 ## 🚀 Getting Started
 
