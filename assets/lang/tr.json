@@ -1,0 +1,11 @@
+{
+    "login": {
+        "title": "Hoş Geldiniz",
+        "subtitle": "Sizinle tekrar buluşmak ne güzel",
+        "username": "Kullanıcı Adı",
+        "password": "Şifre",
+        "login": "Giriş Yap",
+        "forgotPassword": "Şifrenizi mi unuttunuz?"
+    },
+    "owner": "Created By Muhammed Rıza Kaynak© 2025"
+}

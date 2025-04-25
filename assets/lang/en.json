@@ -1,0 +1,11 @@
+{
+   "login": {
+      "title": "Welcome",
+      "subtitle": "We are glad to see you back with us",
+      "username": "Username",
+      "password": "Password",
+      "login": "Login",
+      "forgotPassword": "Forgot Password?"
+   },
+   "owner": "Created By Muhammed Rıza Kaynak© 2025"
+}

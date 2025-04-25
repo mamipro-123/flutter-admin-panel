@@ -1,0 +1,46 @@
+name: admin_panel
+description: "A admin panel for the app."
+publish_to: 'none'
+version: 0.1.0
+
+environment: 
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dio: ^5.5.0+1
+  retrofit: ^4.1.0
+  json_annotation: ^4.9.0
+  stacked: ^3.4.3
+  logger: ^1.1.0 
+  stacked_services: ^1.5.0
+  freezed_annotation: ^2.4.4
+  reactive_forms: ^17.0.1
+  animations: ^2.0.11
+  shared_preferences: ^2.2.3
+  easy_localization: ^3.0.7
+  flutter_slidable: ^3.1.1
+  email_validator: '^2.1.17'
+  smooth_page_indicator: ^1.2.0+3
+  crypto: ^3.0.5
+  flutter_secure_storage: ^9.2.2
+  pie_chart: ^5.4.0
+  responsive_size_helper_plus: ^1.0.5
+  google_fonts: ^6.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  freezed: ^2.4.4 
+  build_runner: '>=2.3.0 <4.0.0'
+  json_serializable: ^6.6.2
+  retrofit_generator: ^8.1.2
+  stacked_generator: ^1.6.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/lang/
+    - assets/images/
